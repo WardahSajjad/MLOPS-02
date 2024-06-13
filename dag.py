@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 def load(data):
     df = pd.DataFrame(data)
-    df.to_csv('/mnt/c/Users/Dell/Documents/Eeman/Mlops_A2_i200911/dawnData.csv', index=False)
+    df.to_csv('/mnt/c/Users/Dell/Documents/Warda/Mlops_A2_i200911/dawnData.csv', index=False)
 
 def ET(url, source, selector):
     session = requests.Session()
@@ -64,7 +64,7 @@ with dag:
 
     git__dvc = BashOperator(
         task_id='Git_And_DVC_Initialization',
-        bash_command="cd /mnt/c/Users/Dell/Documents/Eeman/Mlops_A2_i200911 && git init && dvc init && git remote add origin git@github-eeman:eemanqadeer1/Mlops_Assignment_2.git && dvc remote add -d myremote gdrive://1MiCuyV61tni3Et2ntalnzE6NUFMr-tap"
+        bash_command="cd /mnt/c/Users/Dell/Documents/Warda/Mlops_A2_i200911 && git init && dvc init && git remote add origin git@github-warda:wardasajjad/Mlops_Assignment_2.git && dvc remote add -d myremote gdrive://1MiCuyV61tni3Et2ntalnzE6NUFMr-tap"
     )  
     extract_trans = PythonOperator(
         task_id=f'extract_transform',
@@ -78,6 +78,6 @@ with dag:
     )
     DVC_Push_Git_Push = BashOperator(
         task_id='dvc_and_git_push',
-        bash_command="cd /mnt/c/Users/Dell/Documents/Eeman/Mlops_A2_i200911 && dvc add dawnData.csv && dvc push && git add dawnData.csv.dvc && git commit -m 'Work Commited' && git push origin master"
+        bash_command="cd /mnt/c/Users/Dell/Documents/warda/Mlops_A2_i200911 && dvc add dawnData.csv && dvc push && git add dawnData.csv.dvc && git commit -m 'Work Commited' && git push origin master"
     )
     git__dvc >> extract_trans >> loading >> DVC_Push_Git_Push 
